@@ -1,11 +1,17 @@
-import { useState } from "react";
-import states from "../data/states";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { addEmployee } from "../redux/slices/EmployeeSlice";
+import states from "../data/states";
+import $ from "jquery";
+import "jquery-datetimepicker";
+import "jquery-datetimepicker/jquery.datetimepicker.css";
+import "jquery-modal";
+import "jquery-modal/jquery.modal.min.css";
 import "../styles/form.css";
 
 const EmployeeForm = () => {
   const dispatch = useDispatch();
+  const [errors, setErrors] = useState({});
   const [employee, setEmployee] = useState({
     firstName: "",
     lastName: "",
@@ -18,8 +24,6 @@ const EmployeeForm = () => {
     department: "Sales",
   });
 
-  const [errors, setErrors] = useState({});
-
   const validate = () => {
     const newErrors = {};
     if (!/^[A-Za-z]+$/.test(employee.firstName)) {
@@ -29,10 +33,10 @@ const EmployeeForm = () => {
       newErrors.lastName = "Last name must contain only letters.";
     }
     if (!/^\d{2}\/\d{2}\/\d{4}$/.test(employee.dateOfBirth)) {
-      newErrors.dateOfBirth = "Invalid date format (DD/MM/YYYY).";
+      newErrors.dateOfBirth = "Invalid date format (MM/DD/YYYY).";
     }
     if (!/^\d{2}\/\d{2}\/\d{4}$/.test(employee.startDate)) {
-      newErrors.startDate = "Invalid date format (DD/MM/YYYY).";
+      newErrors.startDate = "Invalid date format (MM/DD/YYYY).";
     }
     if (!/^\d{5}$/.test(employee.zipCode)) {
       newErrors.zipCode = "Zip code must be 5 digits.";
@@ -63,9 +67,29 @@ const EmployeeForm = () => {
         zipCode: "",
         department: "Sales",
       });
-      alert("Employee Created!");
     }
+    $("#confirmation").modal();
   };
+
+  useEffect(() => {
+    $.datetimepicker.setLocale("en");
+
+    $("#dateOfBirth").datetimepicker({
+      timepicker: false,
+      format: "m/d/Y",
+      onChangeDateTime: (dp, $input) => {
+        setEmployee((prev) => ({ ...prev, dateOfBirth: $input.val() }));
+      },
+    });
+
+    $("#startDate").datetimepicker({
+      timepicker: false,
+      format: "m/d/Y",
+      onChangeDateTime: (dp, $input) => {
+        setEmployee((prev) => ({ ...prev, startDate: $input.val() }));
+      },
+    });
+  }, []);
 
   return (
     <form id="create-employee" className="form" onSubmit={handleSubmit}>
@@ -184,6 +208,9 @@ const EmployeeForm = () => {
       <button type="submit" className="form__button">
         Save
       </button>
+      <div id="confirmation" className="modal">
+        Employee Created!
+      </div>
     </form>
   );
 };
