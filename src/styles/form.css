@@ -168,7 +168,9 @@ select {
   overflow: auto;
   justify-content: center;
   align-items: center;
-  padding: 50px 0;
+  padding: 50px 100px;
+  border-radius: 20px;
+  background: #fff;
 }
 
 .modal-background {

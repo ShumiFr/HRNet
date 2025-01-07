@@ -1,14 +1,27 @@
 import { useSelector, useDispatch } from "react-redux";
 import { deleteEmployee } from "../redux/slices/EmployeeSlice";
 import Tableau from "../components/Tableau";
+import Modal from "../components/Modal";
 import "../styles/table.css";
 
 const EmployeeListPage = () => {
   const dispatch = useDispatch();
   const employees = useSelector((state) => state.employee.employees);
 
+  const openModal = () => {
+    const modal = document.getElementById("confirmation");
+    const modalBackground = document.querySelector(".modal-background");
+    modalBackground.style.display = "flex";
+    modal.style.display = "flex";
+    setTimeout(() => {
+      modal.style.display = "none";
+      modalBackground.style.display = "none";
+    }, 1000);
+  };
+
   const handleDelete = (employeeId) => {
     dispatch(deleteEmployee({ id: employeeId }));
+    openModal();
   };
 
   return (
@@ -34,6 +47,7 @@ const EmployeeListPage = () => {
       <a href="/create-employee" className="employee-list__link">
         Home
       </a>
+      <Modal message={"Employee Deleted !"} />
     </div>
   );
 };

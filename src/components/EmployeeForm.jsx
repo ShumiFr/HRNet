@@ -4,6 +4,7 @@ import { addEmployee } from "../redux/slices/EmployeeSlice";
 import states from "../data/states";
 import Modal from "./Modal";
 import MenuDeroulant from "./MenuDeroulant";
+import DateTimePicker from "./DateTimePicker";
 import "../styles/form.css";
 
 const EmployeeForm = () => {
@@ -37,10 +38,10 @@ const EmployeeForm = () => {
       newErrors.lastName = "Last name must contain only letters.";
     }
     if (!/^\d{2}\/\d{2}\/\d{4}$/.test(employee.dateOfBirth)) {
-      newErrors.dateOfBirth = "Invalid date format (MM/DD/YYYY).";
+      newErrors.dateOfBirth = "Invalid date format (DD/MM/YYYY).";
     }
     if (!/^\d{2}\/\d{2}\/\d{4}$/.test(employee.startDate)) {
-      newErrors.startDate = "Invalid date format (MM/DD/YYYY).";
+      newErrors.startDate = "Invalid date format (DD/MM/YYYY).";
     }
     if (!/^\d{5}$/.test(employee.zipCode)) {
       newErrors.zipCode = "Zip code must be 5 digits.";
@@ -82,6 +83,7 @@ const EmployeeForm = () => {
         zipCode: "",
         department: "Sales",
       });
+      setErrors({});
       openModal();
     }
   };
@@ -115,24 +117,22 @@ const EmployeeForm = () => {
       <label htmlFor="dateOfBirth" className="form__label">
         Date of Birth
       </label>
-      <input
-        type="text"
-        id="dateOfBirth"
-        className="form__input"
+      <DateTimePicker
         value={employee.dateOfBirth}
-        onChange={handleChange}
+        onChange={(value) =>
+          setEmployee((prev) => ({ ...prev, dateOfBirth: value }))
+        }
       />
       {errors.dateOfBirth && <p className="error">{errors.dateOfBirth}</p>}
 
       <label htmlFor="startDate" className="form__label">
         Start Date
       </label>
-      <input
-        type="text"
-        id="startDate"
-        className="form__input"
+      <DateTimePicker
         value={employee.startDate}
-        onChange={handleChange}
+        onChange={(value) =>
+          setEmployee((prev) => ({ ...prev, startDate: value }))
+        }
       />
       {errors.startDate && <p className="error">{errors.startDate}</p>}
 
@@ -196,7 +196,7 @@ const EmployeeForm = () => {
       <button type="submit" className="form__button">
         Save
       </button>
-      <Modal />
+      <Modal message={"Employee Created!"} />
     </form>
   );
 };
