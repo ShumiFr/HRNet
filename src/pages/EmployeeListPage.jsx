@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { deleteEmployee } from "../redux/slices/EmployeeSlice";
+import Tableau from "../components/Tableau";
 import "../styles/table.css";
 
 const EmployeeListPage = () => {
@@ -28,29 +29,7 @@ const EmployeeListPage = () => {
             <th className="employee-list__header">Actions</th>
           </tr>
         </thead>
-        <tbody className="employee-list__tbody">
-          {employees.map((employee, index) => (
-            <tr key={index} className="employee-list__row">
-              <td className="employee-list__cell">{employee.firstName}</td>
-              <td className="employee-list__cell">{employee.lastName}</td>
-              <td className="employee-list__cell">{employee.startDate}</td>
-              <td className="employee-list__cell">{employee.department}</td>
-              <td className="employee-list__cell">{employee.dateOfBirth}</td>
-              <td className="employee-list__cell">{employee.street}</td>
-              <td className="employee-list__cell">{employee.city}</td>
-              <td className="employee-list__cell">{employee.state}</td>
-              <td className="employee-list__cell">{employee.zipCode}</td>
-              <td className="employee-list__cell">
-                <button
-                  className="employee-list__button"
-                  onClick={() => handleDelete(employee.id)}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
+        <Tableau employees={employees} handleDelete={handleDelete} />
       </table>
       <a href="/create-employee" className="employee-list__link">
         Home

@@ -1,12 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addEmployee } from "../redux/slices/EmployeeSlice";
 import states from "../data/states";
-import $ from "jquery";
-import "jquery-datetimepicker";
-import "jquery-datetimepicker/jquery.datetimepicker.css";
-import "jquery-modal";
-import "jquery-modal/jquery.modal.min.css";
+import Modal from "./Modal";
+import MenuDeroulant from "./MenuDeroulant";
 import "../styles/form.css";
 
 const EmployeeForm = () => {
@@ -23,6 +20,13 @@ const EmployeeForm = () => {
     zipCode: "",
     department: "Sales",
   });
+  const departments = [
+    { name: "Sales" },
+    { name: "Marketing" },
+    { name: "Engineering" },
+    { name: "Human resources" },
+    { name: "Legal" },
+  ];
 
   const validate = () => {
     const newErrors = {};
@@ -49,6 +53,17 @@ const EmployeeForm = () => {
     setEmployee((prev) => ({ ...prev, [id]: value }));
   };
 
+  const openModal = () => {
+    const modal = document.getElementById("confirmation");
+    const modalBackground = document.querySelector(".modal-background");
+    modalBackground.style.display = "flex";
+    modal.style.display = "flex";
+    setTimeout(() => {
+      modal.style.display = "none";
+      modalBackground.style.display = "none";
+    }, 3000);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const validationErrors = validate();
@@ -67,29 +82,9 @@ const EmployeeForm = () => {
         zipCode: "",
         department: "Sales",
       });
+      openModal();
     }
-    $("#confirmation").modal();
   };
-
-  useEffect(() => {
-    $.datetimepicker.setLocale("en");
-
-    $("#dateOfBirth").datetimepicker({
-      timepicker: false,
-      format: "m/d/Y",
-      onChangeDateTime: (dp, $input) => {
-        setEmployee((prev) => ({ ...prev, dateOfBirth: $input.val() }));
-      },
-    });
-
-    $("#startDate").datetimepicker({
-      timepicker: false,
-      format: "m/d/Y",
-      onChangeDateTime: (dp, $input) => {
-        setEmployee((prev) => ({ ...prev, startDate: $input.val() }));
-      },
-    });
-  }, []);
 
   return (
     <form id="create-employee" className="form" onSubmit={handleSubmit}>
@@ -166,13 +161,12 @@ const EmployeeForm = () => {
 
           <div className="form__grid__item">
             <label htmlFor="state">State</label>
-            <select id="state" value={employee.state} onChange={handleChange}>
-              {states.map((state) => (
-                <option key={state.name} value={state.name}>
-                  {state.name}
-                </option>
-              ))}
-            </select>
+            <MenuDeroulant
+              id="state"
+              value={employee.state}
+              options={states}
+              onChange={handleChange}
+            />
           </div>
 
           <div className="form__grid__item">
@@ -191,26 +185,18 @@ const EmployeeForm = () => {
       <label htmlFor="department" className="form__label">
         Department
       </label>
-      <select
-        name="department"
+
+      <MenuDeroulant
         id="department"
-        className="form__select"
         value={employee.department}
+        options={departments}
         onChange={handleChange}
-      >
-        <option value="Sales">Sales</option>
-        <option value="Marketing">Marketing</option>
-        <option value="Engineering">Engineering</option>
-        <option value="Human Resources">Human Resources</option>
-        <option value="Legal">Legal</option>
-      </select>
+      />
 
       <button type="submit" className="form__button">
         Save
       </button>
-      <div id="confirmation" className="modal">
-        Employee Created!
-      </div>
+      <Modal />
     </form>
   );
 };
