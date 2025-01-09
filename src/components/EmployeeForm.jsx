@@ -1,10 +1,11 @@
+import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addEmployee } from "../redux/slices/EmployeeSlice";
 import states from "../data/states";
 import Modal from "./Modal";
 import MenuDeroulant from "./MenuDeroulant";
-import DateTimePicker from "./DateTimePicker";
+import DatePicker from "@shumifr/react-date-picker";
 import "../styles/form.css";
 
 const EmployeeForm = () => {
@@ -117,7 +118,7 @@ const EmployeeForm = () => {
       <label htmlFor="dateOfBirth" className="form__label">
         Date of Birth
       </label>
-      <DateTimePicker
+      <DatePicker
         value={employee.dateOfBirth}
         onChange={(value) =>
           setEmployee((prev) => ({ ...prev, dateOfBirth: value }))
@@ -128,7 +129,7 @@ const EmployeeForm = () => {
       <label htmlFor="startDate" className="form__label">
         Start Date
       </label>
-      <DateTimePicker
+      <DatePicker
         value={employee.startDate}
         onChange={(value) =>
           setEmployee((prev) => ({ ...prev, startDate: value }))
