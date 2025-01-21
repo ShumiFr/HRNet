@@ -7,7 +7,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/create-employee" element={<CreateEmployeePage />} />
-        <Route path="/employee-list" element={<EmployeeListPage />} />
+        <Route exact path="/" element={<EmployeeListPage />} />
       </Routes>
     </Router>
   );

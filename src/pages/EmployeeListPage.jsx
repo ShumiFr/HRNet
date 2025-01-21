@@ -3,6 +3,7 @@ import { deleteEmployee } from "../redux/slices/EmployeeSlice";
 import Tableau from "../components/Tableau";
 import Modal from "../components/Modal";
 import "../styles/table.css";
+import { Link } from "react-router-dom";
 
 const EmployeeListPage = () => {
   const dispatch = useDispatch();
@@ -44,9 +45,9 @@ const EmployeeListPage = () => {
         </thead>
         <Tableau employees={employees} handleDelete={handleDelete} />
       </table>
-      <a href="/create-employee" className="employee-list__link">
+      <Link to="/create-employee" className="employee-list__link">
         Home
-      </a>
+      </Link>
       <Modal message={"Employee Deleted !"} />
     </div>
   );
