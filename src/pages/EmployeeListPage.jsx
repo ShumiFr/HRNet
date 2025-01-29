@@ -2,8 +2,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { deleteEmployee } from "../redux/slices/EmployeeSlice";
 import Tableau from "../components/Tableau";
 import Modal from "../components/Modal";
-import "../styles/table.css";
 import { Link } from "react-router-dom";
+import "../styles/pages/employeeList.css";
 
 const EmployeeListPage = () => {
   const dispatch = useDispatch();

@@ -1,5 +1,5 @@
 import EmployeeForm from "../components/EmployeeForm";
-import "../styles/form.css";
+import "../styles/pages/createEmployee.css";
 
 const CreateEmployeePage = () => {
   return (

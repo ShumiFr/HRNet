@@ -5,7 +5,6 @@ import states from "../data/states";
 import Modal from "./Modal";
 import MenuDeroulant from "./MenuDeroulant";
 import DatePicker from "@shumifr/react-date-picker";
-import "../styles/form.css";
 
 const EmployeeForm = () => {
   const dispatch = useDispatch();
