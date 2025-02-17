@@ -4,3 +4,60 @@
   align-items: center;
   justify-content: center;
 }
+
+.page-size-select-container,
+.search-bar-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.page-size-select {
+  margin: 0 0.5rem;
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.pagination-info {
+  flex: 1;
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+}
+
+.pagination-controls button {
+  margin: 0 0.5rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+.table-container-header {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.employee-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.employee-table th,
+.employee-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.employee-table th {
+  background-color: #f2f2f2;
+  text-align: left;
+}
